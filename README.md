@@ -10,8 +10,7 @@ Given an <b>input file</b>. Read the input file name from the <b>command line</b
 
 Following, there will be m lines each containing a statement in the knowledge base. <b>Each clause is in one of these two <b>formats</b>:
 1- p1 ∧ p2 ∧ ... ∧ pn => q
-2- facts: which are atomic sentences. Such as p or ~p
-</b>
+2- facts: which are atomic sentences. Such as p or ~p </b>
 
 * All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
 * Queries will not contain any variables.
