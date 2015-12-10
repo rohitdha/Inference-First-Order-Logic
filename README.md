@@ -5,7 +5,7 @@ We are going to implement a backward chaining system that gets the rules of data
 ### Problem:
 Given a knowledge base and a number of queries. Job is to determine if the queries can be inferred from the knowledge base or not, used backward chaining algorithm to solve this problem
 
-### Input Format: 
+### Input format: 
 Given an input file. Read the input file name from the command line.The first line of the input will be the number of queries [(n)]. Following n lines will be the queries, one per line. For each of them, need todetermine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of clauses in the knowledge base (m).
 
 Following, there will be m lines each containing a statement in the knowledge base. Each clause is in one of these two formats:
@@ -20,11 +20,11 @@ Following, there will be m lines each containing a statement in the knowledge ba
 * Each predicate has at least one argument. (There is no upper bound for the number of arguments). Same predicate will not appear with different number of arguments.
 * All of the arguments of the facts are constants. i.e. you can assume that there will be no fact such as HasPermission(x,Contacts) ( which says that everyone has permission to see the contacts!) in the knowledge base.
 
-### Output Format:
+### Output format:
 Develop code in a file called “inference.py”. Output the results into a file ‘output.txt’. For each query, determine if that query can be inferred from the knowledge base or not, one query per line. If true, print “TRUE” and if not, print “FALSE”. (without the double quotes)
 
 ### Some clarifications
 * If you decide that the given statement can be inferred from the knowledge base, every variable in each rule of the proving process should be unified with a Constant. So, if you have something like A(x) -> B(John) , and you cannot find any x to fulfill the A(x) premise, you cannot say that B(John) is true.
-* The knowledge base that you get is consistent. So there are no contradicting rules or facts in the knowledge base.
-* If you run to a loop and there is no alternative paths you can try, report False. An example for this would be having just two rules 1) A(x) -> B(x) 2) B(x) -> A(x) and wanting to prove A(John) . In this case your program should report false. In other words, if all the alternatives for proving A(x) lead back to A(x), this is considered a loop thus you have to report false.
+* The knowledge base will beconsistent and hence there will be no contradicting rules or facts in the knowledge base.
+* If you run to a loop and there is no alternative paths you can try, report <b>False</b>. An example for this would be having just two rules 1) A(x) -> B(x) 2) B(x) -> A(x) and wanting to prove A(John) . In this case your program should report false. In other words, if all the alternatives for proving A(x) lead back to A(x), this is considered a loop thus you have to report false.
 * There will be at most 100 queries and 1000 clauses in the knowledge base.
