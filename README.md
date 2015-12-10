@@ -9,8 +9,8 @@ Given a <b>knowledge base</b> and a <b>number of queries</b>. Job is to determin
 Given an <b>input file</b>. Read the input file name from the <b>command line</b>.The first line of the input will be the number of <b>queries</b> <b>(n)</b>. Following n lines will be the queries, one per line. For each of them, need to determine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of <b>clauses</b> in the knowledge base <b>(m)</b>.
 
 Following, there will be m lines each containing a statement in the knowledge base. <b>Each clause is in one of these two <b>formats</b>:
-1- p1 ∧ p2 ∧ ... ∧ pn => q
-2- facts: which are atomic sentences. Such as p or ~p </b>
+* p1 ∧ p2 ∧ ... ∧ pn => q
+* facts: which are atomic sentences. Such as p or ~p
 
 * All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
 * Queries will not contain any variables.
