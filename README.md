@@ -1,3 +1,6 @@
 # Introduction:
 As mobiles, wearables and other tiny gadgets surround us more and more in our day to day life, we are sharing more and more information with enterprises that provide us with their services. But what do we lose in return? How much control do we have on over our private information? These question seem simple to answer at the first glance. You share what you want to share. But, it’s not like that with the use of AI methods that can mine your shared data to infer your private non-shared personal information. In this assignment, we want to help users to find out what an enterprise can do with their data before giving permission to their applications to access that.
 We are going to implement a backward chaining system that gets the rules of data-mining and the abilities that an enterprise has at its disposal. Then it will help customers to find out if a certain type of personal information can be extracted by that enterprise if it gains access to another set of information about the user.
+
+# Problem:
+Given a knowledge base and a number of queries. Job is to determine if the queries can be inferred from the knowledge base or not, used backward chaining algorithm to solve this problem
