@@ -11,7 +11,9 @@ Given an input file. Read the input file name from the command line.The first li
 Following, there will be m lines each containing a statement in the knowledge base. Each clause is in one of these two formats:
 1- p1 ∧ p2 ∧ ... ∧ pn => q
 2- facts: which are atomic sentences. Such as p or ~p
-All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
+
+
+..* All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
 Queries will not contain any variables.
 Variables are all single lowercase letters
 All predicates (such as HasPermission) and constants (such as Google) are case-sensitive alphabetical strings that begin with uppercase letters.
