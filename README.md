@@ -3,7 +3,7 @@ As mobiles, wearables and other tiny gadgets surround us more and more in our da
 We are going to implement a backward chaining system that gets the rules of data-mining and the abilities that an enterprise has at its disposal. Then it will help customers to find out if a certain type of personal information can be extracted by that enterprise if it gains access to another set of information about the user.
 
 ### Problem:
-Given a <b>knowledge base<b> and a <b>number of queries</b>. Job is to determine if the queries can be inferred from the knowledge base or not, used <b>backward chaining algorithm</b> to solve this problem
+Given a <b>knowledge base</b> and a <b>number of queries</b>. Job is to determine if the queries can be inferred from the knowledge base or not, used <b>backward chaining algorithm</b> to solve this problem
 
 ### Input format: 
 Given an input file. Read the input file name from the command line.The first line of the input will be the number of <b>queries</b> <b>(n)</b>. Following n lines will be the queries, one per line. For each of them, need to determine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of <b>clauses</b> in the knowledge base <b>(m)</b>.
