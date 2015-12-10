@@ -209,7 +209,7 @@ class Backward_Chain():
 			new_string = q + "," + theta
 		return new_string
 	
-	# return length of the arguments
+	# Returns the length of the arguments
 	def checkargs(self, z):
 		val = z.split(",")
 		return len(val)
@@ -304,12 +304,14 @@ class Backward_Chain():
 		for i in range(1, len(parts)):
 			contents += parts[i] + ","
 		return contents[0:int(len(contents)-1)]
-			
+	
+	#checks if variable is of alphanumeric type		
 	def variable1(self,x):
 		if x.isalnum() and x.islower():
 			return True
 		return False
 	
+	#checks if variable is just a single lowercase character of length 1.
 	def variable(self,x):
 		if( x.isalpha() and x.islower() and len(x) == 1):
 			return True
@@ -323,6 +325,7 @@ class Backward_Chain():
 	def ops(self,x):
 		return x.rpartition('(')[0]
 	
+	# Returns the arguments
 	def args(self,x):
 		return x[x.index("(")+1:x.index(')')]
 	
@@ -332,6 +335,7 @@ class Backward_Chain():
 				return True
 		return False
 	
+	# Returns the first argument
 	def first(self,x):
 		parts = x.split(',')
 		return parts[0]
