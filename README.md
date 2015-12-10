@@ -22,3 +22,9 @@ Following, there will be m lines each containing a statement in the knowledge ba
 
 ### Output Format:
 Develop code in a file called “inference.py”. Output the results into a file ‘output.txt’. For each query, determine if that query can be inferred from the knowledge base or not, one query per line. If true, print “TRUE” and if not, print “FALSE”. (without the double quotes)
+
+### Some clarifications
+* If you decide that the given statement can be inferred from the knowledge base, every variable in each rule of the proving process should be unified with a Constant. So, if you have something like A(x) -> B(John) , and you cannot find any x to fulfill the A(x) premise, you cannot say that B(John) is true.
+* The knowledge base that you get is consistent. So there are no contradicting rules or facts in the knowledge base.
+* If you run to a loop and there is no alternative paths you can try, report False. An example for this would be having just two rules 1) A(x) -> B(x) 2) B(x) -> A(x) and wanting to prove A(John) . In this case your program should report false. In other words, if all the alternatives for proving A(x) lead back to A(x), this is considered a loop thus you have to report false.
+* There will be at most 100 queries and 1000 clauses in the knowledge base.
