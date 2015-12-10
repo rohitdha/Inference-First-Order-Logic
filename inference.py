@@ -2,12 +2,23 @@
   Author: Rohit Dhawan
   Algorithm: Backward Chaining
   Domain: Artificial Intelligence
+  Sample Input Format:
+	2                // 2 Queries
+	H(Bob)
+	F(Hello)
+	3                // 3 Entries in the KB: Knowledge base
+	R(x) => H(x)
+	R(Tom)
+	F(Hi)
+  Sample Output Format:
+	TRUE
+	FALSE
 """
 import sys
 import collections
 import re
 
-class ReadData():
+class Backward_Chain():
 	
 	no_of_clauses = 0
 	no_of_queries = 0
@@ -27,161 +38,138 @@ class ReadData():
 		with open(sys.argv[-1], 'r') as f:
 			content = f.read()
 		
+		# To handle file formatting 
 		contents = re.sub("\n\s*\n*", "\n", content)
 		contents = contents.replace('\r','')
 		
-		# Complete input_file is present in the overall_list 
-		ReadData.overall_list = contents.splitlines()
-		#for u in ReadData.overall_list:
-		#	print u
+		# Storing complete input_file in the overall_list 
+		Backward_Chain.overall_list = contents.splitlines()
 
-		# Total number of queries are present in the no_of_queries
-		ReadData.no_of_queries = ReadData.overall_list[0]
-		#print "\n" + ReadData.no_of_queries + "\n"
+		# Storing number of queries in the no_of_queries variable
+		Backward_Chain.no_of_queries = Backward_Chain.overall_list[0]
 		
 		# Building Query_list
-		for i in range(1, int(ReadData.no_of_queries)+1):		
-			ReadData.query_list.append(ReadData.overall_list[i])
+		for i in range(1, int(Backward_Chain.no_of_queries)+1):		
+			Backward_Chain.query_list.append(Backward_Chain.overall_list[i])
 		
  		
-		#Total number of clauses present in the knowledge base
-		ReadData.no_of_clauses = ReadData.overall_list[int(ReadData.no_of_queries)+1]
-		#print "\n" + ReadData.no_of_clauses + "\n"
+		#Total number of clauses present in the no_of_clauses
+		Backward_Chain.no_of_clauses = Backward_Chain.overall_list[int(Backward_Chain.no_of_queries)+1]
 		
-		for i in range(int(ReadData.no_of_queries)+2,len(ReadData.overall_list)):
-			if ReadData.overall_list[i].find("=>") != -1:
-				ReadData.implication_list.append(ReadData.overall_list[i])
+		#Traversing the Knowledge base to figure out Compound Statements and Predicate Statments
+		for i in range(int(Backward_Chain.no_of_queries)+2,len(Backward_Chain.overall_list)):
+			if Backward_Chain.overall_list[i].find("=>") != -1:
+				Backward_Chain.implication_list.append(Backward_Chain.overall_list[i])
 			else:
-				ReadData.predicate_list.append(ReadData.overall_list[i])
+				Backward_Chain.predicate_list.append(Backward_Chain.overall_list[i])
+
+		for item in Backward_Chain.implication_list:
+			Backward_Chain.RHS_VALUES.append(item[item.index("=>")+2:].lstrip().rstrip())
 			
-		#print len(ReadData.predicate_list)
+		for item in Backward_Chain.implication_list:
+			Backward_Chain.LHS_VALUES.append(item.rpartition('=>')[0].lstrip().rstrip())
 		
-		for item in ReadData.implication_list:
-			ReadData.RHS_VALUES.append(item[item.index("=>")+2:].lstrip().rstrip())
-			
-		for item in ReadData.implication_list:
-			ReadData.LHS_VALUES.append(item.rpartition('=>')[0].lstrip().rstrip())
+		for item in Backward_Chain.predicate_list:
+			Backward_Chain.RHS_VALUES.append(item.lstrip().rstrip())
+			Backward_Chain.LHS_VALUES.append("")
 		
-		for item in ReadData.predicate_list:
-			ReadData.RHS_VALUES.append(item.lstrip().rstrip())
-			ReadData.LHS_VALUES.append("")
-		
-		"""for i in ReadData.RHS_VALUES:
-			print i
-			
-		for i in ReadData.LHS_VALUES:
-			print i
-		print "\n"
-		"""
+		# Handles variable standardization 
 		list = []
 		and_ = "^"
-		for count,item in enumerate(ReadData.LHS_VALUES):
+		for count,item in enumerate(Backward_Chain.LHS_VALUES):
 			parts = item.split("^")
-			#print parts
 			list = []
-			for it in parts:
-				if it != '':
-					k = self.args(it)
-					k1 = k
-					l = k.split(",")
-					for itel in l:
-						if(self.variable(itel)):
-							k = k.replace(itel,itel+str(count+1))	
-					#print it
-					it = it.replace(k1,k)
-					#print it
-					list.append(it);
-			L1 = and_.join(list)
+			for part in parts:
+				if part != '':
+					arguments = self.args(part)
+					new_arguments = arguments
+					single_variable = arguments.split(",")
+					for vars in single_variable:
+						if(self.variable(vars)):
+							arguments = arguments.replace(vars,vars+str(count+1))	
+					part = part.replace(new_arguments,arguments)
+					list.append(part);
+			new_list = and_.join(list)
 			
-			ReadData.LHS_VALUES_NEW.append(L1)
+			Backward_Chain.LHS_VALUES_NEW.append(new_list)
 		
 		list = []
 		comma_ = ","
-		for count,item in enumerate(ReadData.RHS_VALUES):
-			k = self.args(item)
-			u = item.rpartition('(')[0]
-			#print u
+		for count,item in enumerate(Backward_Chain.RHS_VALUES):
+			arguments = self.args(item)
+			predicate_ = item.rpartition('(')[0]
 			list = []
-			l = k.split(",")
-			#print l
-			for itel in l:
-				if(self.variable(itel)):
-					itel = itel.replace(itel,itel+str(count+1))
-				list.append(itel)
-			l1 = comma_.join(list)
-			#print l1
-			complete_string = u + "(" + l1 + ")"
-			#print complete_string
-			ReadData.RHS_VALUES_NEW.append(complete_string)
+			single_variable = arguments.split(",")
+			for vars in single_variable:
+				if(self.variable(vars)):
+					vars = vars.replace(vars,vars+str(count+1))
+				list.append(vars)
+			new_list_ = comma_.join(list)
+			complete_string = predicate_ + "(" + new_list_ + ")"
+			Backward_Chain.RHS_VALUES_NEW.append(complete_string)
 	
-		"""for i in ReadData.RHS_VALUES_NEW:
-			print i
-		
-		for i in ReadData.LHS_VALUES_NEW:
-			print i
-		"""
-	def replaceall(self,item,itel,itel1):
-		item = item.replace(itel1,itel)
+	def replaceall(self,item,var,var_1):
+		item = item.replace(var_1,var)
 		return item
 	
+	# A dictionary object that stores KB
 	def createImplicationMap(self):
-		for item in ReadData.implication_list:
-			ReadData.my_dict[item.rpartition('=>')[0]] = item[item.index("=>")+2:]
-		#for keys,values in ReadData.my_dict.items():
-		#	print keys + "  " + values
+		for item in Backward_Chain.implication_list:
+			Backward_Chain.my_dict[item.rpartition('=>')[0]] = item[item.index("=>")+2:]
 	
-	def check_facts(self,val):
-		for list in ReadData.predicate_list:
-			if val == list:
-				return "TRUE"
-	
+	# Backward Chaining Algorithm 
 	def backward_chain(self,file):
-		for val in ReadData.query_list:
-			x = self.check_facts(val)
+		for val in Backward_Chain.query_list:
+			x = self.check_facts(val) # Check if predicate is already present in the Knowledge base 
 			if ( x == "TRUE" ):
-				#print 'TRUE'
 				file.write("TRUE")
 			else:
-				y = self.ask_backward_chain(val,"")
-				ReadData.stack = []
-				ReadData.answers = ""
+				y = self.ask_backward_chain(val,"") # Do Substitutions and traverse through KB to infer results
+				Backward_Chain.stack = []
+				Backward_Chain.answers = ""
 				if y != "":
-					#print 'TRUE'
 					file.write('TRUE')
-					
 				else:
-					#print 'FALSE'
 					file.write('FALSE')
 			file.write("\n")
-				
 	
+	# Traverse KB to see if Predicate in the KB
+	def check_facts(self,val):
+		for list in Backward_Chain.predicate_list:
+			if val == list:
+				return "TRUE"
+				
+	"""
+	theta : Stores appended substitution from the repetitive recursive calls initially blank{" "} 
+	val:    Predicate from the Query to be proved
+	Backward_Chain.answers: if "val"{Query} is proved from the KB:
+					return "complete substitution list"
+				else 
+					return "empty string" 
+	"""
 	def ask_backward_chain(self, val, theta):
 
 		if not val:
 			return theta
 		
-		#print "\n","value of theta: ",theta,"\n";
 		q = self.sub_str( theta, self.first_Quotient(val))
-		#print "\n","value of q currently: ",q,"\n";
 		
-		for item in ReadData.stack:
+		for item in Backward_Chain.stack:
 			if item == q:
-				if ReadData.stack.count(item) > 2:
-					return ReadData.answers
+				if Backward_Chain.stack.count(item) > 2:
+					return Backward_Chain.answers
 		
-		ReadData.stack.append(q)
+		Backward_Chain.stack.append(q)
 		
-		for i in range(0,len(ReadData.RHS_VALUES_NEW)):
+		for i in range(0,len(Backward_Chain.RHS_VALUES_NEW)):
 			index = q.index("(")
-			#print ReadData.RHS_VALUES[i]
-			qindex = ReadData.RHS_VALUES[i].index("(")
+			qindex = Backward_Chain.RHS_VALUES[i].index("(")
 			
-			if ReadData.RHS_VALUES[i][0:qindex] == q[0:index]:
-				yo = self.unify(q,ReadData.RHS_VALUES_NEW[i],"")
-				#print "yo\t",yo
+			if Backward_Chain.RHS_VALUES[i][0:qindex] == q[0:index]:
+				yo = self.unify(q,Backward_Chain.RHS_VALUES_NEW[i],"")
 				if yo != "Failure":
 
-					new_goals = ReadData.LHS_VALUES_NEW[i] + "^" + self.rest_Quotient(val)
+					new_goals = Backward_Chain.LHS_VALUES_NEW[i] + "^" + self.rest_Quotient(val)
 
 					if new_goals[len(new_goals)-1] == '^':
 						new_goals = new_goals[0:len(new_goals)-1]
@@ -190,16 +178,16 @@ class ReadData():
 						new_goals = new_goals[1:len(new_goals)]
 						
 					new_goals = new_goals.lstrip()
-					ReadData.answers = ReadData.answers + self.ask_backward_chain(new_goals,self.compose(yo,theta))
-					#print "ReadData.answers\t",ReadData.answers
+					Backward_Chain.answers = Backward_Chain.answers + self.ask_backward_chain(new_goals,self.compose(yo,theta))
 
-		return ReadData.answers
+		return Backward_Chain.answers
 		
-	
+	# Splits the the compound statement like " p1^p2^p3 " and return p1 
 	def first_Quotient(self, val):
 		part = val.split('^');
 		return part[0]
 	
+	# Splits the the compound statement like " p1^p2^p3 " and return p2^p3
 	def rest_Quotient(self,val):
 		parts = val.split("^")
 		contents = ""
@@ -210,6 +198,7 @@ class ReadData():
 				contents += parts[i] + "^"
 		return contents[0:int(len(contents)-1)]
 	
+	# Appends new substitution
 	def compose(self, q, theta):
 		new_string = ""
 		if not theta:
@@ -220,20 +209,18 @@ class ReadData():
 			new_string = q + "," + theta
 		return new_string
 	
+	# Returns the length of the arguments
 	def checkargs(self, z):
 		val = z.split(",")
 		return len(val)
 	
+	#Apply substitition {has(x),has(john) -- {x/John}}
 	def sub_str(self,theta,concl):
 		start_index = concl.index('(')
 		last_index = concl.index(')')
 		result = concl[start_index+1:last_index]
 		params = result.split(',')
 		part = theta.split(',')
-		"""print "Params\t ",params,"\n"
-		print "Part\t ",part,"\n"
-		print "theta\t ",theta,"\n"
-		"""
 		if(len(part) == 1):
 			part2 = part[0].split("/")
 			for i in params:
@@ -247,10 +234,9 @@ class ReadData():
 						concl = concl.replace(x,part2[1])
 		return concl
 	
-	
+	# Unification Algorithm
 	def unify(self,x,y,theta):
 		
-		#print "\n","inside unify, value of theta: ",x," ",y,"\n"
 		if theta == "Failure":
 			return "Failure"
 		
@@ -318,13 +304,14 @@ class ReadData():
 		for i in range(1, len(parts)):
 			contents += parts[i] + ","
 		return contents[0:int(len(contents)-1)]
-			
+	
+	#checks if variable is of alphanumeric type		
 	def variable1(self,x):
-		#if( x[0].islower() and len(x) == 2):
 		if x.isalnum() and x.islower():
 			return True
 		return False
 	
+	#checks if variable is just a single lowercase character of length 1.
 	def variable(self,x):
 		if( x.isalpha() and x.islower() and len(x) == 1):
 			return True
@@ -338,6 +325,7 @@ class ReadData():
 	def ops(self,x):
 		return x.rpartition('(')[0]
 	
+	# Returns the arguments
 	def args(self,x):
 		return x[x.index("(")+1:x.index(')')]
 	
@@ -347,16 +335,18 @@ class ReadData():
 				return True
 		return False
 	
+	# Returns the first argument
 	def first(self,x):
 		parts = x.split(',')
 		return parts[0]
-	
+
+#Main Function
 def main():
-	c = ReadData()
+	c = Backward_Chain()
 	c.readFile()
 	file = open("output.txt", "w")
-	#c.createImplicationMap()
 	c.backward_chain(file)
 	
 if __name__ == "__main__":
 	main()
+#-----END-----#
