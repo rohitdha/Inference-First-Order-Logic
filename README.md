@@ -19,3 +19,6 @@ Following, there will be m lines each containing a statement in the knowledge ba
 * All predicates (such as HasPermission) and constants (such as Google) are case-sensitive alphabetical strings that begin with uppercase letters.
 * Each predicate has at least one argument. (There is no upper bound for the number of arguments). Same predicate will not appear with different number of arguments.
 * All of the arguments of the facts are constants. i.e. you can assume that there will be no fact such as HasPermission(x,Contacts) ( which says that everyone has permission to see the contacts!) in the knowledge base.
+
+### Output Format:
+Develop code in a file called “inference.py”. Output the results into a file ‘output.txt’. For each query, determine if that query can be inferred from the knowledge base or not, one query per line. If true, print “TRUE” and if not, print “FALSE”. (without the double quotes)
