@@ -3,16 +3,16 @@
   Algorithm: Backward Chaining
   Domain: Artificial Intelligence
   Sample Input Format:
-		2                // 2 Queries
-		H(Bob)
-		F(Hello)
-		3                // 3 Entries in the KB: Knowledge base
-		R(x) => H(x)
-		R(Tom)
-		F(Hi)
+	2                // 2 Queries
+	H(Bob)
+	F(Hello)
+	3                // 3 Entries in the KB: Knowledge base
+	R(x) => H(x)
+	R(Tom)
+	F(Hi)
   Sample Output Format:
-		TRUE
-		FALSE
+	TRUE
+	FALSE
 """
 import sys
 import collections
@@ -143,9 +143,9 @@ class Backward_Chain():
 	theta : Stores appended substitution from the repetitive recursive calls initially blank{" "} 
 	val:    Predicate from the Query to be proved
 	Backward_Chain.answers: if "val"{Query} is proved from the KB:
-								return "complete substitution list"
-							else 
-								return "empty string" 
+					return "complete substitution list"
+				else 
+					return "empty string" 
 	"""
 	def ask_backward_chain(self, val, theta):
 
