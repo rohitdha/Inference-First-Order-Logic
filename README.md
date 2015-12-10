@@ -8,10 +8,10 @@ Given a <b>knowledge base</b> and a <b>number of queries</b>. Job is to determin
 ### Input format: 
 Given an <b>input file</b>. Read the input file name from the <b>command line</b>.The first line of the input will be the number of <b>queries</b> <b>(n)</b>. Following n lines will be the queries, one per line. For each of them, need to determine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of <b>clauses</b> in the knowledge base <b>(m)</b>.
 
-Following, there will be m lines each containing a statement in the knowledge base. Each clause is in one of these two formats:
+Following, there will be m lines each containing a statement in the knowledge base. <b>Each clause is in one of these two <b>formats</b>:
 1- p1 ∧ p2 ∧ ... ∧ pn => q
 2- facts: which are atomic sentences. Such as p or ~p
-
+</b>
 
 * All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
 * Queries will not contain any variables.
@@ -21,10 +21,10 @@ Following, there will be m lines each containing a statement in the knowledge ba
 * All of the arguments of the facts are constants. i.e. you can assume that there will be no fact such as HasPermission(x,Contacts) ( which says that everyone has permission to see the contacts!) in the knowledge base.
 
 ### Output format:
-Develop code in a file called “inference.py”. Output the results into a file ‘output.txt’. For each query, determine if that query can be inferred from the knowledge base or not, one query per line. If true, print <b>“TRUE”</b> and if not, print <b>“FALSE”</b>. (without the double quotes)
+Develop code in a file called <b>“inference.py”</b>. Output the results into a file <b>‘output.txt’</b>. For each query, determine if that query can be inferred from the knowledge base or not, one query per line. If true, print <b>“TRUE”</b> and if not, print <b>“FALSE”</b>. (without the double quotes)
 
 ### Some clarifications
 * If you decide that the given statement can be inferred from the knowledge base, every variable in each rule of the proving process should be unified with a Constant. So, if you have something like A(x) -> B(John) , and you cannot find any x to fulfill the A(x) premise, you cannot say that B(John) is true.
-* The knowledge base will beconsistent and hence there will be no contradicting rules or facts in the knowledge base.
+* The knowledge base will be consistent and hence there will be no contradicting rules or facts in the knowledge base.
 * If you run to a loop and there is no alternative paths you can try, report False. An example for this would be having just two rules 1) A(x) -> B(x) 2) B(x) -> A(x) and wanting to prove A(John) . In this case your program should report false. In other words, if all the alternatives for proving A(x) lead back to A(x), this is considered a loop thus you have to report false.
-* There will be at most 100 queries and 1000 clauses in the knowledge base.
+* There will be <b>at most 100 queries and 1000 clauses in the knowledge base</b>.
