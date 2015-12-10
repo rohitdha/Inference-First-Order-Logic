@@ -8,8 +8,8 @@ Given a <b>knowledge base</b> and a <b>number of queries</b>. Job is to determin
 ### Input format: 
 Given an <b>input file</b>. Read the input file name from the <b>command line</b>.The first line of the input will be the number of <b>queries</b> <b>(n)</b>. Following n lines will be the queries, one per line. For each of them, need to determine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of <b>clauses</b> in the knowledge base <b>(m)</b>.
 
-Following, there will be m lines each containing a statement in the knowledge base. Each clause is in one of these two formats:
-1. p1 ∧ p2 ∧ ... ∧ pn => q
+Following, there will be m lines each containing a statement in the knowledge base. Each clause is in one of these two formats:<br>
+1. p1 ∧ p2 ∧ ... ∧ pn => q<br>
 2. facts: which are atomic sentences. Such as p or ~p
 
 
