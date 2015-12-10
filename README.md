@@ -13,7 +13,7 @@ Following, there will be m lines each containing a statement in the knowledge ba
 2- facts: which are atomic sentences. Such as p or ~p
 
 
-..* All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
+* All the p s and also q are either a literal such as HasPermission(Google,Contacts) or negative of a literal such as ~HasPermission(Google,Contacts).
 
 ..* Queries will not contain any variables.
 
