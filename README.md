@@ -1,4 +1,5 @@
-#BACKWARD CHAINING ALGORITHM PROJECT DETAILS IN ARTIFICIAL INTELLIGENCE
+#<u>BACKWARD CHAINING ALGORITHM PROJECT</u>
+------------------------------------
 
 ## Introduction:
 ---------------
