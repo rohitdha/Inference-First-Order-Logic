@@ -6,7 +6,7 @@ We are going to implement a backward chaining system that gets the rules of data
 Given a <b>knowledge base</b> and a <b>number of queries</b>. Job is to determine if the queries can be inferred from the knowledge base or not, used <b>backward chaining algorithm</b> to solve this problem
 
 ### Input format: 
-Given an input file. Read the input file name from the command line.The first line of the input will be the number of <b>queries</b> <b>(n)</b>. Following n lines will be the queries, one per line. For each of them, need to determine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of <b>clauses</b> in the knowledge base <b>(m)</b>.
+Given an <b>input file</b>. Read the input file name from the <b>command line</b>.The first line of the input will be the number of <b>queries</b> <b>(n)</b>. Following n lines will be the queries, one per line. For each of them, need to determine whether it can be proved form the knowledge base or not. Next line of the input will contain the number of <b>clauses</b> in the knowledge base <b>(m)</b>.
 
 Following, there will be m lines each containing a statement in the knowledge base. Each clause is in one of these two formats:
 1- p1 ∧ p2 ∧ ... ∧ pn => q
