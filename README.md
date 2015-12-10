@@ -1,7 +1,8 @@
-#<u>BACKWARD CHAINING ALGORITHM PROJECT</u>
+##<u>BACKWARD CHAINING ALGORITHM PROJECT</u>
 ------------------------------------
 
-## Introduction:
+
+### Introduction:
 ---------------
 
 As mobiles, wearables and other tiny gadgets surround us more and more in our day to day life, we are sharing more and more information with enterprises that provide us with their services. But what do we lose in return? How much control do we have on over our private information? These question seem simple to answer at the first glance. You share what you want to share. But, it’s not like that with the use of AI methods that can mine your shared data to infer your private non-shared personal information. In this assignment, we want to help users to find out what an enterprise can do with their data before giving permission to their applications to access that.
