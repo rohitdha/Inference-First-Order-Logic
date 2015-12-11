@@ -42,3 +42,4 @@ Develop code in a file called <b>“inference.py”</b>. Output the results into
 * The knowledge base will be consistent and hence there will be no contradicting rules or facts in the knowledge base.
 * If you run to a loop and there is no alternative paths you can try, report False. An example for this would be having just two rules 1) A(x) -> B(x) 2) B(x) -> A(x) and wanting to prove A(John) . In this case your program should report false. In other words, if all the alternatives for proving A(x) lead back to A(x), this is considered a loop thus you have to report false.
 * There will be <b>at most 100 queries and 1000 clauses in the knowledge base</b>.
+* 
