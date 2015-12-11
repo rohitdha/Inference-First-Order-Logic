@@ -2,6 +2,7 @@
   Author: Rohit Dhawan
   Algorithm: Backward Chaining
   Domain: Artificial Intelligence
+  
   Sample Input Format:
 	2                // 2 Queries
 	H(Bob)
@@ -10,16 +11,25 @@
 	R(x) => H(x)
 	R(Tom)
 	F(Hi)
+	
   Sample Output Format:
 	TRUE
 	FALSE
+	
+  Statement:
+  	R(x) => H(x)
+  	H(Bob)
+  	RHS LIST: H(x)
+  	LHS LIST: R(x),H(Bob)
 """
 import sys
 import collections
 import re
 
+# Defined a class for reading the data, implementing Backward Chaining and generating the output
 class Backward_Chain():
 	
+	# Variables used 
 	no_of_clauses = 0
 	no_of_queries = 0
 	implication_list = []
@@ -34,6 +44,7 @@ class Backward_Chain():
 	answers = ""
 	stack = [] 
 	
+	# Function to read and manipulate the input from the file
 	def readFile(self):
 		with open(sys.argv[-1], 'r') as f:
 			content = f.read()
@@ -62,18 +73,22 @@ class Backward_Chain():
 				Backward_Chain.implication_list.append(Backward_Chain.overall_list[i])
 			else:
 				Backward_Chain.predicate_list.append(Backward_Chain.overall_list[i])
-
+		
+		#Creating RHS VALUE LIST from compound list
 		for item in Backward_Chain.implication_list:
 			Backward_Chain.RHS_VALUES.append(item[item.index("=>")+2:].lstrip().rstrip())
-			
+		
+		# Creating LHS VALUE LIST from compound list
 		for item in Backward_Chain.implication_list:
 			Backward_Chain.LHS_VALUES.append(item.rpartition('=>')[0].lstrip().rstrip())
 		
+		# Creating LHS and RHS VALUE LIST from the Predicate list 
 		for item in Backward_Chain.predicate_list:
 			Backward_Chain.RHS_VALUES.append(item.lstrip().rstrip())
 			Backward_Chain.LHS_VALUES.append("")
 		
 		# Handles variable standardization 
+		# Creating new LHS value list after Standardization 
 		list = []
 		and_ = "^"
 		for count,item in enumerate(Backward_Chain.LHS_VALUES):
@@ -93,6 +108,7 @@ class Backward_Chain():
 			
 			Backward_Chain.LHS_VALUES_NEW.append(new_list)
 		
+		# Creating new RHS Value list after Standardization
 		list = []
 		comma_ = ","
 		for count,item in enumerate(Backward_Chain.RHS_VALUES):
@@ -108,6 +124,7 @@ class Backward_Chain():
 			complete_string = predicate_ + "(" + new_list_ + ")"
 			Backward_Chain.RHS_VALUES_NEW.append(complete_string)
 	
+	# Function to carry out Replacements in a string
 	def replaceall(self,item,var,var_1):
 		item = item.replace(var_1,var)
 		return item
@@ -151,9 +168,11 @@ class Backward_Chain():
 
 		if not val:
 			return theta
-		
+			
+		# Substitutes variable {has(x), has(john) {x/John}}
 		q = self.sub_str( theta, self.first_Quotient(val))
 		
+		# To detect infinite loops
 		for item in Backward_Chain.stack:
 			if item == q:
 				if Backward_Chain.stack.count(item) > 2:
@@ -179,7 +198,7 @@ class Backward_Chain():
 						
 					new_goals = new_goals.lstrip()
 					Backward_Chain.answers = Backward_Chain.answers + self.ask_backward_chain(new_goals,self.compose(yo,theta))
-
+		# contains the substitution list, retuns "" if Query can't be proved
 		return Backward_Chain.answers
 		
 	# Splits the the compound statement like " p1^p2^p3 " and return p1 
@@ -209,12 +228,13 @@ class Backward_Chain():
 			new_string = q + "," + theta
 		return new_string
 	
-	# Returns the length of the arguments
+	# Return the number of the arguments
 	def checkargs(self, z):
 		val = z.split(",")
 		return len(val)
 	
-	#Apply substitition {has(x),has(john) -- {x/John}}
+	# Apply substitition {Has(x),Has(john) -- {x/John}}
+	# {theta : x/john} returns Has(john) if Has(x) is passed
 	def sub_str(self,theta,concl):
 		start_index = concl.index('(')
 		last_index = concl.index(')')
@@ -257,6 +277,7 @@ class Backward_Chain():
 		else:
 			return "Failure"
 	
+	# Formation of Overall Substitution list
 	def unifyvar(self, x, y, theta):
 		val = self.checkvar ( x, theta)
 		val2 = self.checkvar( y, theta)
@@ -270,7 +291,9 @@ class Backward_Chain():
 			else:
 				theta = theta + "," + x + "/" + y
 		return theta;
-		
+	
+	# Checks to see if a particular substitution is part of overall Substitution list{theta}
+	# Example: Particular Substitution {x/okay}, Overall Substitution {theta = "x/Hello,y/Hi,z/Okay"} retuns False  
 	def belongs(self,x,val,theta):
 		part = theta.split(',')
 		y =  x + "/" + val
@@ -279,6 +302,8 @@ class Backward_Chain():
 				return True
 		return False
 	
+	# Finds the substitution value for a particular variable if not found returns ""
+	# Example: theta = "x/Hello,y/Hi,z/Okay", if we are looking for substitution value of z, it returns "Okay"
 	def checkvar(self,x,theta):
 		val = ""
 		if theta == "":
@@ -298,6 +323,7 @@ class Backward_Chain():
 		
 		return val;
 	
+	# Returns the argument list array except first argument 
 	def rest(self, x):
 		parts = x.split(",")
 		contents = ""
@@ -305,30 +331,33 @@ class Backward_Chain():
 			contents += parts[i] + ","
 		return contents[0:int(len(contents)-1)]
 	
-	#checks if variable is of alphanumeric type		
+	# Check if variable is of alphanumeric type		
 	def variable1(self,x):
 		if x.isalnum() and x.islower():
 			return True
 		return False
 	
-	#checks if variable is just a single lowercase character of length 1.
+	# Check if variable is just a single lowercase character of length 1.
 	def variable(self,x):
 		if( x.isalpha() and x.islower() and len(x) == 1):
 			return True
 		return False
 	
+	# Check for compound statement 
 	def compound(self,x):
 		if '(' in x and len(x) > 1 :
 			return True;
 		return False
 	
+	# Returns the name of the predicate 
 	def ops(self,x):
 		return x.rpartition('(')[0]
 	
-	# Returns the arguments
+	# Return the arguments
 	def args(self,x):
 		return x[x.index("(")+1:x.index(')')]
 	
+	# Check to see if it is a argument list
 	def list(self,x):
 		if ',' in x:
 			if '(' not in x:
